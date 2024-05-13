@@ -1,0 +1,14 @@
+name = "gimbalabs/ppbl-faucet"
+version = "0.0.0"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'gimbalabs/ppbl-faucet'"
+
+[repository]
+user = "gimbalabs"
+project = "ppbl-faucet"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "1.8.0"
+source = "github"
