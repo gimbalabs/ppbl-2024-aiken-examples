@@ -3,11 +3,13 @@ use aiken/transaction.{ScriptContext, Transaction} as tx
 use aiken/transaction/credential
 use aiken/transaction/value
 
+/// The datum
 type FaucetDatum {
   withdrawal_amount: Int,
   faucet_token_name: ByteArray,
 }
 
+/// The redeemer
 type FaucetRedeemer {
   sender_pkh: credential.PaymentCredential,
   access_token_name: ByteArray,
