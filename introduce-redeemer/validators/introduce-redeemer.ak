@@ -1,6 +1,9 @@
+use aiken/hash.{Blake2b_224, Hash}
 use aiken/interval.{Finite}
+use aiken/list
 use aiken/time.{PosixTime}
 use aiken/transaction.{ScriptContext, Transaction, ValidityRange} as tx
+use aiken/transaction/credential.{VerificationKey}
 
 // introduce-datum.ak
 // unlock utxo before a time specified in datum
@@ -8,28 +11,44 @@ use aiken/transaction.{ScriptContext, Transaction, ValidityRange} as tx
 type SpendingDatum {
   start_time: PosixTime,
   end_time: PosixTime,
+  admin_pkh: VerificationKeyHash,
 }
+
+type SpendingRedeemerAction {
+  Claim
+  Update
+}
+
+type VerificationKeyHash =
+  Hash<Blake2b_224, VerificationKey>
 
 validator {
   fn introduce_datum(
     datum: SpendingDatum,
-    redeemer: SpendingDatum,
+    redeemer: SpendingRedeemerAction,
     context: ScriptContext,
   ) -> Bool {
     let ScriptContext { transaction, purpose } = context
     expect tx.Spend(_) = purpose
 
-    let Transaction { validity_range, .. } = transaction
+    let Transaction { validity_range, extra_signatories, .. } = transaction
 
-    let SpendingDatum { start_time, end_time } = datum
+    let SpendingDatum { start_time, end_time, admin_pkh } = datum
 
-    and {
-      datum == redeemer,
-      must_start_after(validity_range, start_time),
-      must_start_before(validity_range, end_time),
+    when redeemer is {
+      Claim -> and {
+          must_start_after(validity_range, start_time),
+          must_start_before(validity_range, end_time),
+        }
+      Update -> list.has(extra_signatories, admin_pkh)
     }
   }
 }
+
+// The truth is, this is not secure enough.
+// The "admin" can simply claim utxos, and is not required to update them
+// At live coding, we will add a rule that says the same amount of lovelace must be returned to the contract utxo
+// What are some other rules we could implement?
 
 // We will reuse this:
 // Let's move it to a different file so we can use it often

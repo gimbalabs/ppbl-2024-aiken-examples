@@ -9,9 +9,9 @@ use aiken/transaction.{ScriptContext, Transaction, ValidityRange} as tx
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
 validator {
-  fn reference_token_pair(
-    datum: Int,
-    redeemer: Int,
+  fn introduce_context(
+    datum: Data,
+    redeemer: Data,
     context: ScriptContext,
   ) -> Bool {
     let ScriptContext { transaction, purpose } = context
@@ -19,7 +19,7 @@ validator {
 
     let Transaction { validity_range, .. } = transaction
 
-    let lock_until = 1721565497000
+    let lock_until = 1721670400000
 
     and {
       datum == redeemer,
@@ -28,6 +28,7 @@ validator {
   }
 }
 
+// See https://aiken-lang.org/example--vesting
 fn must_start_after(range: ValidityRange, lock_expiration_time: PosixTime) {
   when range.lower_bound.bound_type is {
     Finite(tx_earliest_time) -> lock_expiration_time <= tx_earliest_time

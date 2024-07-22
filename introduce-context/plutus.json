@@ -16,22 +16,23 @@
       "datum": {
         "title": "datum",
         "schema": {
-          "$ref": "#/definitions/Int"
+          "$ref": "#/definitions/Data"
         }
       },
       "redeemer": {
         "title": "redeemer",
         "schema": {
-          "$ref": "#/definitions/Int"
+          "$ref": "#/definitions/Data"
         }
       },
-      "compiledCode": "589a010000323232323223223225333006323253330083370e900118049baa300b300c00213253330093370e00e00a26464a66601666e1d2002300c3754002266e2520d09ae6d49a64375a601c601a6ea8004528180098061baa3001300c37540044601a0022940c02cc030c030c030c030c030c030c030c028dd50008b180500098041baa00114984d958dd68009bad0015734aae7555cf2ba15745",
-      "hash": "e11e609dd337ef90270b357d32859af41020d97a20f5811a0bf9b704"
+      "compiledCode": "589201000032323232322225333004323253330063370e900118039baa3009300a00213253330073375e00c00a26464a66601266e1d2002300a3754002266e252080e0ebb89b64375a601860166ea8004528180098051baa3001300a3754004460160022940c024c028c028c028c028c028c028c028c020dd50008b180400098031baa00114984d9595cd2ab9d5573cae855d101",
+      "hash": "27311658f22a6f7be4ee097db3e2fa2e9cea9b60996e310f10e513bb"
     }
   ],
   "definitions": {
-    "Int": {
-      "dataType": "integer"
+    "Data": {
+      "title": "Data",
+      "description": "Any Plutus data."
     }
   }
 }
