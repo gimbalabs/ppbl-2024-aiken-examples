@@ -1,0 +1,37 @@
+{
+  "preamble": {
+    "title": "ppbl-2024-aiken-examples/introduce-context",
+    "description": "Aiken contracts for project 'ppbl-2024-aiken-examples/introduce-context'",
+    "version": "0.0.0",
+    "plutusVersion": "v2",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.0.29-alpha+unknown"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "introduce_context.reference_token_pair",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/Int"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/Int"
+        }
+      },
+      "compiledCode": "589a010000323232323223223225333006323253330083370e900118049baa300b300c00213253330093370e00e00a26464a66601666e1d2002300c3754002266e2520d09ae6d49a64375a601c601a6ea8004528180098061baa3001300c37540044601a0022940c02cc030c030c030c030c030c030c030c028dd50008b180500098041baa00114984d958dd68009bad0015734aae7555cf2ba15745",
+      "hash": "e11e609dd337ef90270b357d32859af41020d97a20f5811a0bf9b704"
+    }
+  ],
+  "definitions": {
+    "Int": {
+      "dataType": "integer"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+name = "ppbl-2024-aiken-examples/introduce-redeemer"
+version = "0.0.0"
+compiler = "v1.0.29-alpha"
+plutus = "v2"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'ppbl-2024-aiken-examples/introduce-redeemer'"
+
+[repository]
+user = "ppbl-2024-aiken-examples"
+project = "introduce-redeemer"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "1.9.0"
+source = "github"
