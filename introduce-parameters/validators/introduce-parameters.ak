@@ -1,17 +1,20 @@
 use aiken/hash.{Blake2b_224, Hash}
-use aiken/interval.{Finite}
 use aiken/list
 use aiken/time.{PosixTime}
-use aiken/transaction.{ScriptContext, Transaction, ValidityRange} as tx
+use aiken/transaction.{ScriptContext, Transaction} as tx
 use aiken/transaction/credential.{VerificationKey}
+// At this step, we add sidan_utils -- let's take a look!
 
-// introduce-redeemer.ak
-// unlock utxo before a time specified in datum
+// Todo: build tx and confirm this works
+
+use sidan_utils/validity_range.{valid_after, valid_before}
+
+// introduce-parameters.ak
+// compare to introduce-redeemer.ak
 
 type SpendingDatum {
   start_time: PosixTime,
   end_time: PosixTime,
-  admin_pkh: VerificationKeyHash,
 }
 
 type SpendingRedeemerAction {
@@ -22,8 +25,8 @@ type SpendingRedeemerAction {
 type VerificationKeyHash =
   Hash<Blake2b_224, VerificationKey>
 
-validator {
-  fn introduce_redeemer(
+validator(admin_pkh: VerificationKeyHash) {
+  fn introduce_parameters(
     datum: SpendingDatum,
     redeemer: SpendingRedeemerAction,
     context: ScriptContext,
@@ -33,36 +36,18 @@ validator {
 
     let Transaction { validity_range, extra_signatories, .. } = transaction
 
-    let SpendingDatum { start_time, end_time, admin_pkh } = datum
+    let SpendingDatum { start_time, end_time } = datum
 
     when redeemer is {
       Claim -> and {
-          must_start_after(validity_range, start_time),
-          must_start_before(validity_range, end_time),
+          valid_after(validity_range, start_time),
+          valid_before(validity_range, end_time),
         }
       Update -> list.has(extra_signatories, admin_pkh)
     }
   }
 }
-
 // The truth is, this is not secure enough.
 // The "admin" can simply claim utxos, and is not required to update them
 // At live coding, we will add a rule that says the same amount of lovelace must be returned to the contract utxo
 // What are some other rules we could implement?
-
-// We will reuse this:
-// Let's move it to a different file so we can use it often
-// See https://aiken-lang.org/example--vesting
-fn must_start_after(range: ValidityRange, lock_expiration_time: PosixTime) {
-  when range.lower_bound.bound_type is {
-    Finite(tx_earliest_time) -> lock_expiration_time <= tx_earliest_time
-    _ -> False
-  }
-}
-
-fn must_start_before(range: ValidityRange, redeem_expiration_time: PosixTime) {
-  when range.upper_bound.bound_type is {
-    Finite(tx_latest_time) -> redeem_expiration_time >= tx_latest_time
-    _ -> False
-  }
-}

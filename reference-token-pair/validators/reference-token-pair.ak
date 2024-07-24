@@ -1,7 +1,10 @@
-use aiken/bytearray.{concat}
+use aiken/builtin.{append_bytearray}
 use aiken/list
-use aiken/transaction.{ScriptContext, Transaction} as tx
-use aiken/transaction/value
+use aiken/transaction.{InlineDatum, ScriptContext, Transaction} as tx
+use aiken/transaction/value.{AssetName}
+
+// see note below
+// use sidan_utils/outputs.{output_inline_datum}
 
 // Todo
 // Create a related minting validator
@@ -12,7 +15,6 @@ type ReferenceTokenDatum {
 }
 
 type ReferenceTokenRedeemer {
-  // How to index constructor values?
   new_image_url: ByteArray,
   new_description: ByteArray,
   token_name: ByteArray,
@@ -20,19 +22,18 @@ type ReferenceTokenRedeemer {
 
 validator(reference_token_symbol: value.PolicyId) {
   fn reference_token_pair(
-    datum: ReferenceTokenDatum,
+    _datum: ReferenceTokenDatum,
     redeemer: ReferenceTokenRedeemer,
     context: ScriptContext,
   ) -> Bool {
-    let ReferenceTokenDatum { image_url, description } = datum
     let ReferenceTokenRedeemer { new_image_url, new_description, token_name } =
       redeemer
     let ScriptContext { transaction, purpose } = context
     expect tx.Spend(utxo_ref) = purpose
     let Transaction { inputs, outputs, .. } = transaction
 
-    let tn100 = concat("100", token_name)
-    let tn222 = concat("222", token_name)
+    let tn100: AssetName = append_bytearray("100", token_name)
+    let tn222: AssetName = append_bytearray("222", token_name)
 
     expect [reference_token_input] =
       list.filter(inputs, fn(input) { input.output_reference == utxo_ref })
@@ -59,9 +60,13 @@ validator(reference_token_symbol: value.PolicyId) {
         },
       )
 
+    // note: could use sidan output_inline_datum here
+    expect InlineDatum(ref_output_datum) = reference_token_output.datum
+    expect reference_token_datum: ReferenceTokenDatum = ref_output_datum
+
     and {
-      image_url == new_image_url,
-      description == new_description,
+      reference_token_datum.image_url == new_image_url,
+      reference_token_datum.description == new_description,
       value.quantity_of(
         reference_token_input.output.value,
         reference_token_symbol,
