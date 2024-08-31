@@ -7,7 +7,7 @@ use aiken/transaction/credential.{VerificationKey}
 
 // Todo: build tx and confirm this works
 
-use sidan_utils/validity_range.{valid_after, valid_before}
+use vodka_validity_range.{valid_after, valid_before}
 
 // introduce-parameters.ak
 // compare to introduce-redeemer.ak
