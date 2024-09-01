@@ -4,8 +4,6 @@ use aiken/transaction.{ScriptContext, Transaction} as tx
 use aiken/transaction/credential.{VerificationKey, VerificationKeyCredential}
 use aiken/transaction/value
 
-// use sidan_placeholder/output_reference.{mock_utxo_ref}
-
 /// The datum
 type FaucetDatum {
   withdrawal_amount: Int,
