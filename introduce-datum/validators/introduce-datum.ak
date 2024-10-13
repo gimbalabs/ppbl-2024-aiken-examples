@@ -1,26 +1,29 @@
 use aiken/interval.{Finite}
 use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// introduce-context.ak
-// unlock utxo after a certain time
+// introduce-datum.ak
+// Allow unlock time to be specified for each UTxO
 
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
+pub type Datum {
+  expiration_time: Int,
+}
+
 validator introduce_datum {
   spend(
-    datum: Option<Data>,
-    redeemer: Option<Data>,
+    datum: Option<Datum>,
+    _redeemer: Option<Data>,
     _input: OutputReference,
     tx: Transaction,
   ) {
     let Transaction { validity_range, .. } = tx
 
-    let lock_until = 1721670400000
-
-    and {
-      datum == redeemer,
-      must_start_after(validity_range, lock_until),
+    when datum is {
+      Some(Datum { expiration_time }) ->
+        must_start_after(validity_range, expiration_time)
+      _ -> False
     }
   }
 
