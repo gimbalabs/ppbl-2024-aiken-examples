@@ -1,49 +1,38 @@
 use aiken/interval.{Finite}
-use aiken/time.{PosixTime}
-use aiken/transaction.{ScriptContext, Transaction, ValidityRange} as tx
+use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// introduce-datum.ak
-// unlock utxo before a time specified in datum
+// introduce-context.ak
+// unlock utxo after a certain time
 
-type SpendingDatum {
-  start_time: PosixTime,
-  end_time: PosixTime,
-}
+// Helpful Docs
+// https://aiken-lang.github.io/stdlib/aiken/interval.html
 
-validator {
-  fn introduce_datum(
-    datum: SpendingDatum,
-    redeemer: SpendingDatum,
-    context: ScriptContext,
-  ) -> Bool {
-    let ScriptContext { transaction, purpose } = context
-    expect tx.Spend(_) = purpose
+validator introduce_datum {
+  spend(
+    datum: Option<Data>,
+    redeemer: Option<Data>,
+    _input: OutputReference,
+    tx: Transaction,
+  ) {
+    let Transaction { validity_range, .. } = tx
 
-    let Transaction { validity_range, .. } = transaction
-
-    let SpendingDatum { start_time, end_time } = datum
+    let lock_until = 1721670400000
 
     and {
       datum == redeemer,
-      must_start_after(validity_range, start_time),
-      must_start_before(validity_range, end_time),
+      must_start_after(validity_range, lock_until),
     }
   }
-}
 
-// We will reuse this:
-// Let's move it to a different file so we can use it often
-// See https://aiken-lang.org/example--vesting
-fn must_start_after(range: ValidityRange, lock_expiration_time: PosixTime) {
-  when range.lower_bound.bound_type is {
-    Finite(tx_earliest_time) -> lock_expiration_time <= tx_earliest_time
-    _ -> False
+  else(_) {
+    fail
   }
 }
 
-fn must_start_before(range: ValidityRange, redeem_expiration_time: PosixTime) {
-  when range.upper_bound.bound_type is {
-    Finite(tx_latest_time) -> redeem_expiration_time >= tx_latest_time
+// See https://aiken-lang.org/example--vesting
+fn must_start_after(range: ValidityRange, lock_expiration_time: Int) {
+  when range.lower_bound.bound_type is {
+    Finite(tx_earliest_time) -> lock_expiration_time <= tx_earliest_time
     _ -> False
   }
 }

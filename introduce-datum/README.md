@@ -2,11 +2,9 @@
 
 Write validators in the `validators` folder, and supporting functions in the `lib` folder using `.ak` as a file extension.
 
-For example, as `validators/always_true.ak`
-
-```gleam
-validator {
-  fn spend(_datum: Data, _redeemer: Data, _context: Data) -> Bool {
+```aiken
+validator my_first_validator {
+  spend(_datum: Option<Data>, _redeemer: Data, _output_reference: Data, _context: Data) {
     True
   }
 }
@@ -18,13 +16,25 @@ validator {
 aiken build
 ```
 
+## Configuring
+
+**aiken.toml**
+```toml
+[config.default]
+network_id = 41
+```
+
+Or, alternatively, write conditional environment modules under `env`.
+
 ## Testing
 
 You can write tests in any module using the `test` keyword. For example:
 
-```gleam
+```aiken
+use config
+
 test foo() {
-  1 + 1 == 2
+  config.network_id + 1 == 42
 }
 ```
 
