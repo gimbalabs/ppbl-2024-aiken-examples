@@ -1,0 +1,88 @@
+{
+  "preamble": {
+    "title": "ppbl2024/introduce-datum",
+    "description": "Aiken contracts for project 'ppbl2024/introduce-datum'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.4+unknown"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "introduce_datum.introduce_datum.spend",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/introduce_datum~1Datum"
+        }
+      },
+      "redeemer": {
+        "title": "_redeemer",
+        "schema": {
+          "$ref": "#/definitions/Option$Data"
+        }
+      },
+      "compiledCode": "58fd01010032323232323225333002323232323253323300830013009375400426464646464a66601a66e1d2000001132325333012301400215004163012001300f37540102a66601a600c0022a666020601e6ea8020540085858c034dd5003899299980619b8748000c034dd500109991192999807980418081baa0011337120046eb4c04cc044dd50008a50300230103754600460206ea800c8c044004dd6980818071baa3010300e37540042940c03cc040c040c040c040c040c040c040c034dd500418071807801180680098051baa002370e90010b1805180580118048009804801180380098021baa00114984d9595cd2ab9d5573caae7d5d0aba201",
+      "hash": "fcb82974ca91829bbf07ff752b9fc93e767a7a71c199e72a13929655"
+    },
+    {
+      "title": "introduce_datum.introduce_datum.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "58fd01010032323232323225333002323232323253323300830013009375400426464646464a66601a66e1d2000001132325333012301400215004163012001300f37540102a66601a600c0022a666020601e6ea8020540085858c034dd5003899299980619b8748000c034dd500109991192999807980418081baa0011337120046eb4c04cc044dd50008a50300230103754600460206ea800c8c044004dd6980818071baa3010300e37540042940c03cc040c040c040c040c040c040c040c034dd500418071807801180680098051baa002370e90010b1805180580118048009804801180380098021baa00114984d9595cd2ab9d5573caae7d5d0aba201",
+      "hash": "fcb82974ca91829bbf07ff752b9fc93e767a7a71c199e72a13929655"
+    }
+  ],
+  "definitions": {
+    "Data": {
+      "title": "Data",
+      "description": "Any Plutus data."
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "Option$Data": {
+      "title": "Option",
+      "anyOf": [
+        {
+          "title": "Some",
+          "description": "An optional value.",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "$ref": "#/definitions/Data"
+            }
+          ]
+        },
+        {
+          "title": "None",
+          "description": "Nothing.",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    },
+    "introduce_datum/Datum": {
+      "title": "Datum",
+      "anyOf": [
+        {
+          "title": "Datum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "expiration_time",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
