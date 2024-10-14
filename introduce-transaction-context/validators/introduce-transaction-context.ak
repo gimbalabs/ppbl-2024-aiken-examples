@@ -9,14 +9,14 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
 validator introduce_transaction_context {
   spend(
-    _datum: Option<Data>,
-    _redeemer: Option<Data>,
+    _datum: Option<Int>,
+    _redeemer: Option<Int>,
     _input: OutputReference,
     tx: Transaction,
   ) {
     let Transaction { validity_range, .. } = tx
 
-    let lock_until = 1721670400000
+    let lock_until = 1728906074000
 
     must_start_after(validity_range, lock_until)
   }

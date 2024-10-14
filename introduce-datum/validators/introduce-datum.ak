@@ -13,16 +13,15 @@ pub type Datum {
 
 validator introduce_datum {
   spend(
-    datum: Option<Datum>,
-    _redeemer: Option<Data>,
+    datum: Option<Int>,
+    _redeemer: Option<Int>,
     _input: OutputReference,
     tx: Transaction,
   ) {
     let Transaction { validity_range, .. } = tx
 
     when datum is {
-      Some(Datum { expiration_time }) ->
-        must_start_after(validity_range, expiration_time)
+      Some(Int) -> must_start_after(validity_range, datum)
       _ -> False
     }
   }
