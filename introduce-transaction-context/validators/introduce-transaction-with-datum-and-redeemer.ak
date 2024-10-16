@@ -7,6 +7,9 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
+// Example #3
+// Datum and Redeemer must match
+
 validator introduce_context_with_datum_and_redeemer {
   spend(
     datum: Option<Data>,
@@ -16,7 +19,8 @@ validator introduce_context_with_datum_and_redeemer {
   ) {
     let Transaction { validity_range, .. } = tx
 
-    let lock_until = 1721670400000
+    // Change this number:
+    let lock_until = 1729107050000
 
     and {
       datum == redeemer,
@@ -24,6 +28,8 @@ validator introduce_context_with_datum_and_redeemer {
     }
   }
 
+  // "It's up to you to define the else behavior"
+  // Future: open up options
   else(_) {
     fail
   }

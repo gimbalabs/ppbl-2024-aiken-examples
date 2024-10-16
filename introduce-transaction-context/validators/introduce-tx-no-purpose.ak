@@ -1,5 +1,6 @@
 use aiken/interval.{Finite}
-use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
+use cardano/script_context.{ScriptContext}
+use cardano/transaction.{Transaction, ValidityRange} as tx
 
 // introduce-context.ak
 // unlock utxo after a certain time
@@ -7,22 +8,18 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
-// Example #2
-// Require spending. For any other script purpose, fail
+// Example #1 - a "most general" example
+// Any purpose will do!
 
-validator introduce_transaction_context {
-  spend(_datum, _redeemer, _input: OutputReference, tx: Transaction) {
-    let Transaction { validity_range, .. } = tx
+validator introduce_tx_no_purpose {
+  else(context: ScriptContext) {
+    let Transaction { validity_range, .. } = context.transaction
 
     // Change this value
     // Use https://www.epochconverter.com/
-    let lock_until = 1729104699000
+    let lock_until = 1728906074000
 
     must_start_after(validity_range, lock_until)
-  }
-
-  else(_) {
-    fail
   }
 }
 

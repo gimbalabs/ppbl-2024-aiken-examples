@@ -7,22 +7,29 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
-pub type Datum {
-  expiration_time: Int,
-}
-
 validator introduce_datum {
   spend(
-    datum: Option<Int>,
+    datum_opt: Option<Int>,
     _redeemer: Option<Int>,
     _input: OutputReference,
     tx: Transaction,
   ) {
     let Transaction { validity_range, .. } = tx
 
-    when datum is {
-      Some(Int) -> must_start_after(validity_range, datum)
-      _ -> False
+    // "Old way" - Use this when we want to insist that datum is present
+    // expect Some(datum) = datum_opt
+    // New way of handling optional datum, now that Plutus V3
+    when datum_opt is {
+      Some(datum_int) -> {
+        let is_valid = must_start_after(validity_range, datum_int)
+
+        trace @"Not a valid expiration time"
+        is_valid?
+      }
+
+      // otherwise if datum is not present
+      // Explore the implications in Lesson 205.3
+      _ -> True
     }
   }
 
