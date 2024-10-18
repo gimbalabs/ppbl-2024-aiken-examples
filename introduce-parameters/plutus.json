@@ -1,0 +1,90 @@
+{
+  "preamble": {
+    "title": "ppbl2024/introduce-parameters",
+    "description": "Aiken contracts for project 'ppbl2024/introduce-parameters'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.4+unknown"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "introduce_parameters.introduce_parameters.spend",
+      "datum": {
+        "title": "datum_opt",
+        "schema": {
+          "$ref": "#/definitions/introduce_parameters~1SpendingDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/introduce_parameters~1SpendingRedeemerAction"
+        }
+      },
+      "compiledCode": "59015b010100332323232323223225333004323232323253323300a3001300b37540042646464646464a66602060060022a66602660246ea8024540085854ccc040c01c00454ccc04cc048dd50048a8010b0b18081baa0081323232533301130043012375400a264a666024600a60266ea802c4c8c8c94ccc054c030c058dd5000899b89002375a6032602e6ea80045281801180b1baa30023016375400a6eb4c004c054dd50011180b8008991980080080191299980b8008a5013253330153371e6eb8c06400804c528899801801800980c800980a98099baa0051637586028602a0046026002602660266026602660266026602660206ea8024dc3a400060206022004601e00260186ea8008dc3a40042c6018601a004601600260160046012002600c6ea800452613656375c002ae6955ceaab9e5573eae855d12611e581c13702e304ac7077c1986aa854c31817e90b344ae4a1a95365b7692ba0001",
+      "hash": "80538cb83ef3249d282df24ea86c8239fbe5b5e578b5ee839d445c05"
+    },
+    {
+      "title": "introduce_parameters.introduce_parameters.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "admin_pkh",
+          "schema": {
+            "$ref": "#/definitions/VerificationKeyHash"
+          }
+        }
+      ],
+      "compiledCode": "59013901010032323232323223225333004323232323253323300a3001300b37540042646464646464a66602060060022a66602660246ea8024540085854ccc040c01c00454ccc04cc048dd50048a8010b0b18081baa0081323232533301130043012375400a264a666024600a60266ea802c4c8c8c94ccc054c030c058dd5000899b89002375a6032602e6ea80045281801180b1baa30023016375400a6eb4c004c054dd50011180b8008991980080080191299980b8008a5013253330153371e6eb8c06400804c528899801801800980c800980a98099baa0051637586028602a0046026002602660266026602660266026602660206ea8024dc3a400060206022004601e00260186ea8008dc3a40042c6018601a004601600260160046012002600c6ea800452613656375c002ae6955ceaab9e5573eae855d101",
+      "hash": "f64bad6609d9f6713706fc0341b9d73e4439439c4a9616f347ee297c"
+    }
+  ],
+  "definitions": {
+    "Int": {
+      "dataType": "integer"
+    },
+    "VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
+    "introduce_parameters/SpendingDatum": {
+      "title": "SpendingDatum",
+      "anyOf": [
+        {
+          "title": "SpendingDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "unlock_time",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    },
+    "introduce_parameters/SpendingRedeemerAction": {
+      "title": "SpendingRedeemerAction",
+      "anyOf": [
+        {
+          "title": "Claim",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Remove",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    }
+  }
+}
