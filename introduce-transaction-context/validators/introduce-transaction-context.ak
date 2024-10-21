@@ -1,13 +1,10 @@
 use aiken/interval.{Finite}
 use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// introduce-context.ak
-// unlock utxo after a certain time
+// introduce-transaction-context.ak
+// Lock UTxO at a validator address. After a specified time, anyone can claim the UTxO.
 
-// Helpful Docs
-// https://aiken-lang.github.io/stdlib/aiken/interval.html
-
-// Example #2
+// Example #1
 // Require spending. For any other script purpose, fail
 
 validator introduce_transaction_context {
