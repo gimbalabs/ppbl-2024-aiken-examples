@@ -19,7 +19,7 @@ validator introduce_transaction_time {
 
     // Change this value
     // Use https://www.epochconverter.com/
-    let lock_until = 1728906075000
+    let lock_until = 1729530914000
 
     must_start_after(validity_range, lock_until)
   }

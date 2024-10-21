@@ -1,14 +1,14 @@
 use aiken/interval.{Finite}
 use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// introduce-context.ak
+// introduce-traces.ak
 // unlock utxo after a certain time
 
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
-// Example #3
-// Datum and Redeemer must match
+// SLT 205.4: I can use traces to diagnose validation errors.
+// Datum and Redeemer must match - but which error is stopping validation?
 
 validator introduce_context_with_datum_and_redeemer {
   spend(

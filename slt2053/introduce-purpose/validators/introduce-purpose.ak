@@ -1,13 +1,13 @@
 use aiken/interval.{Finite}
 use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// introduce-transaction-context.ak
+// introduce-purpose.ak
 // Lock UTxO at a validator address. After a specified time, anyone can claim the UTxO.
 
-// Example #1
+// SLT 205.3: I can write a validator with a purpose.
 // Require spending. For any other script purpose, fail
 
-validator introduce_transaction_context {
+validator introduce_purpose {
   spend(_datum, _redeemer, _input: OutputReference, tx: Transaction) {
     let Transaction { validity_range, .. } = tx
 
