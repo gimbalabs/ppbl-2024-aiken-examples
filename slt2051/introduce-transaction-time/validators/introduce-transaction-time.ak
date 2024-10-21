@@ -2,22 +2,24 @@ use aiken/interval.{Finite}
 use cardano/script_context.{ScriptContext}
 use cardano/transaction.{Transaction, ValidityRange} as tx
 
-// introduce-context.ak
+// introduce-transaction-time.ak
 // unlock utxo after a certain time
 
 // Helpful Docs
 // https://aiken-lang.github.io/stdlib/aiken/interval.html
 
-// Example #1 - a "most general" example
-// Any purpose will do!
+// Example 205.1: I can write a validator that succeeds after a specified time.
 
-validator introduce_tx_no_purpose {
+// In this example, any purpose will do!
+// To learn more about purpose, see Lesson 205.3
+
+validator introduce_transaction_time {
   else(context: ScriptContext) {
     let Transaction { validity_range, .. } = context.transaction
 
     // Change this value
     // Use https://www.epochconverter.com/
-    let lock_until = 1728906074000
+    let lock_until = 1728906075000
 
     must_start_after(validity_range, lock_until)
   }
@@ -30,3 +32,5 @@ fn must_start_after(range: ValidityRange, lock_expiration_time: Int) {
     _ -> False
   }
 }
+// Notes
+// After the lock_until time has passed, this validator "always succeeds"

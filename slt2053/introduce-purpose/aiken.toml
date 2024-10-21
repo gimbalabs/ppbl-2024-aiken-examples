@@ -1,13 +1,13 @@
-name = "ppbl2024/introduce-transaction-context"
+name = "ppbl2024/introduce-purpose"
 version = "0.0.0"
-compiler = "v1.1.4"
+compiler = "v1.1.5"
 plutus = "v3"
 license = "Apache-2.0"
-description = "Aiken contracts for project 'ppbl2024/introduce-context'"
+description = "Aiken contracts for project 'ppbl2024/introduce-purpose'"
 
 [repository]
 user = "ppbl2024"
-project = "introduce-context"
+project = "introduce-purpose"
 platform = "github"
 
 [[dependencies]]

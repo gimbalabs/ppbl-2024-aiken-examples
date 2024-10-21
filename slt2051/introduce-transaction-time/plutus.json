@@ -1,0 +1,23 @@
+{
+  "preamble": {
+    "title": "ppbl2024/introduce-transaction-time",
+    "description": "Aiken contracts for project 'ppbl2024/introduce-transaction-time'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.5+unknown"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "introduce_transaction_time.introduce_transaction_time.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "58850101003232323232253330023232323232323253330093370e900118051baa001133712907876d456e8b21bad300c300b37540022940c004c028dd5180098051baa300b300c300c300c300c300c300c300c300a3754600260146ea801c8c02c004c024c028008c020004c020008c018004c010dd50008a4c26cacae6955ceaab9e5742ae89",
+      "hash": "cab50e41fba8b3af1af75980715832be87b3f31e71603e0055c004f6"
+    }
+  ]
+}

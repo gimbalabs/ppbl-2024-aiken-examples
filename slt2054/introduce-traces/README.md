@@ -1,4 +1,4 @@
-# introduce-context
+# introduce-traces
 
 Write validators in the `validators` folder, and supporting functions in the `lib` folder using `.ak` as a file extension.
 
