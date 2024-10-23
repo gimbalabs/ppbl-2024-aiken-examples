@@ -13,7 +13,7 @@ validator introduce_purpose {
 
     // Change this value
     // Use https://www.epochconverter.com/
-    let lock_until = 1729104699000
+    let lock_until = 1729700122000
 
     must_start_after(validity_range, lock_until)
   }

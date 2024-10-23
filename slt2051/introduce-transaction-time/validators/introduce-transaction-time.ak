@@ -13,13 +13,15 @@ use cardano/transaction.{Transaction, ValidityRange} as tx
 // In this example, any purpose will do!
 // To learn more about purpose, see Lesson 205.3
 
+// ddf67a532e7afd88193196871c027ba5e203afc7599005abe4d5d2e4
+
 validator introduce_transaction_time {
   else(context: ScriptContext) {
     let Transaction { validity_range, .. } = context.transaction
 
     // Change this value
     // Use https://www.epochconverter.com/
-    let lock_until = 1729530914000
+    let lock_until = 1729697422000
 
     must_start_after(validity_range, lock_until)
   }

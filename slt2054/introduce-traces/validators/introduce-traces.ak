@@ -10,7 +10,7 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 // SLT 205.4: I can use traces to diagnose validation errors.
 // Datum and Redeemer must match - but which error is stopping validation?
 
-validator introduce_context_with_datum_and_redeemer {
+validator introduce_traces_with_datum_and_redeemer {
   spend(
     datum: Option<Data>,
     redeemer: Option<Data>,
@@ -20,12 +20,16 @@ validator introduce_context_with_datum_and_redeemer {
     let Transaction { validity_range, .. } = tx
 
     // Change this number:
-    let lock_until = 1729107050000
+    let lock_until = 1729704620000
 
-    and {
-      datum == redeemer,
-      must_start_after(validity_range, lock_until),
-    }
+    // Learn more about traces:
+    // https://aiken-lang.org/language-tour/troubleshooting#traces
+    // Note that traces are removed by default with aiken build. Instead, use:
+    // aiken build --trace-level verbose
+    // Try this:
+    // 1. Note that addresses are different with or without --trace-level verbose
+    // 2. How much does it impact minUTxO to include --trace-level verbose
+    (datum == redeemer)? && must_start_after(validity_range, lock_until)?
   }
 
   // "It's up to you to define the else behavior"

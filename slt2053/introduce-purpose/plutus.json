@@ -1,0 +1,46 @@
+{
+  "preamble": {
+    "title": "ppbl2024/introduce-purpose",
+    "description": "Aiken contracts for project 'ppbl2024/introduce-purpose'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.5+unknown"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "introduce_purpose.introduce_purpose.spend",
+      "datum": {
+        "title": "_datum",
+        "schema": {
+          "$ref": "#/definitions/Data"
+        }
+      },
+      "redeemer": {
+        "title": "_redeemer",
+        "schema": {
+          "$ref": "#/definitions/Data"
+        }
+      },
+      "compiledCode": "58a0010100323232323225333002323232323253330073370e900118041baa00113232323232533300c3370e900118069baa00113371290505b65516bb21bad300f300e37540022940c004c034dd5180098069baa300e300f300f300f300f300f300f300f300d37540104601c0026018601a004601600260126ea800458c024c028008c020004c020008c018004c010dd50008a4c26cacae6955ceaab9e5742ae881",
+      "hash": "986af5c122602046308a2ff104815769457b50921c74bf749737eff0"
+    },
+    {
+      "title": "introduce_purpose.introduce_purpose.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "58a0010100323232323225333002323232323253330073370e900118041baa00113232323232533300c3370e900118069baa00113371290505b65516bb21bad300f300e37540022940c004c034dd5180098069baa300e300f300f300f300f300f300f300f300d37540104601c0026018601a004601600260126ea800458c024c028008c020004c020008c018004c010dd50008a4c26cacae6955ceaab9e5742ae881",
+      "hash": "986af5c122602046308a2ff104815769457b50921c74bf749737eff0"
+    }
+  ],
+  "definitions": {
+    "Data": {
+      "title": "Data",
+      "description": "Any Plutus data."
+    }
+  }
+}
