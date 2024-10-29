@@ -16,9 +16,6 @@ validator introduce_datum {
   ) {
     let Transaction { validity_range, .. } = tx
 
-    // "Old way" - Use this when we want to insist that datum is present
-    // expect Some(datum) = datum_opt
-    // New way of handling optional datum, now that Plutus V3
     when datum_opt is {
       Some(datum_int) -> {
         let is_valid = must_start_after(validity_range, datum_int)

@@ -12,15 +12,15 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
 validator introduce_traces_with_datum_and_redeemer {
   spend(
-    datum: Option<Data>,
-    redeemer: Option<Data>,
+    datum: Option<Int>,
+    redeemer: Option<Int>,
     _input: OutputReference,
     tx: Transaction,
   ) {
     let Transaction { validity_range, .. } = tx
 
     // Change this number:
-    let lock_until = 1729704620000
+    let lock_until = 1730198005000
 
     // Learn more about traces:
     // https://aiken-lang.org/language-tour/troubleshooting#traces
@@ -32,8 +32,6 @@ validator introduce_traces_with_datum_and_redeemer {
     (datum == redeemer)? && must_start_after(validity_range, lock_until)?
   }
 
-  // "It's up to you to define the else behavior"
-  // Future: open up options
   else(_) {
     fail
   }
