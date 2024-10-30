@@ -25,7 +25,7 @@ validator introduce_datum {
       }
 
       // otherwise if datum is not present
-      // Explore the implications in Lesson 205.3
+      // See Live Coding 2024-10-30
       _ -> True
     }
   }

@@ -20,7 +20,7 @@ validator introduce_traces_with_datum_and_redeemer {
     let Transaction { validity_range, .. } = tx
 
     // Change this number:
-    let lock_until = 1730198005000
+    let lock_until = 1730301165000
 
     // Learn more about traces:
     // https://aiken-lang.org/language-tour/troubleshooting#traces
