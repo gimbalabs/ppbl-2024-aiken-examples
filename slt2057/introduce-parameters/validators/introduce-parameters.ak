@@ -3,7 +3,7 @@ use aiken/crypto.{VerificationKeyHash}
 use aiken/interval.{Finite}
 use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
-// 205.5: Intro to parameters
+// 205.7: Intro to parameters
 // Suppose that we want to define a single admin_pkh for all UTxOs locked in this validator
 // What are some implications?
 // 1. No longer need admin_pkh in datum

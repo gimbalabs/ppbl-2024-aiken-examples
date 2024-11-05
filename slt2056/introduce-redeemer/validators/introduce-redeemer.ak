@@ -5,7 +5,7 @@ use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
 
 // Here is a rather trivial first example
 // Your task: what is some business logic that would be more helpful than this?
-// Bring your ideas to Lesson 205.4
+// Bring your ideas to Lesson 205.6
 
 pub type SpendingDatum {
   unlock_time: Int,
