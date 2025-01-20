@@ -1,0 +1,19 @@
+name = "gimbalabs/ppbl-faucet"
+version = "0.0.0"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'gimbalabs/ppbl-faucet'"
+
+[repository]
+user = "gimbalabs"
+project = "ppbl-faucet"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "1.9.0"
+source = "github"
+
+[[dependencies]]
+name = "sidan-lab/vodka"
+version = "0.0.1-beta"
+source = "github"
