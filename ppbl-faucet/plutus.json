@@ -1,0 +1,126 @@
+{
+  "preamble": {
+    "title": "gimbalabs/ppbl-faucet",
+    "description": "Aiken contracts for project 'gimbalabs/ppbl-faucet'",
+    "version": "0.1.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.9+2217206"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "ppbl_faucet.ppbl_faucet.spend",
+      "datum": {
+        "title": "datum_opt",
+        "schema": {
+          "$ref": "#/definitions/ppbl_faucet~1FaucetDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/ppbl_faucet~1FaucetRedeemer"
+        }
+      },
+      "parameters": [
+        {
+          "title": "access_token_symbol",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        },
+        {
+          "title": "faucet_token_symbol",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        }
+      ],
+      "compiledCode": "59039c0101003232323232323223223225333006323232323253323300c3001300d37540042646644a66466020600260226ea801c4c8c8c8c94ccc05cc06800854ccc050c014c054dd50030991919191919191919191919192999812181380109919192999813981500109919192999813980c18141baa0011323232533302d303000213232323232533302f30203030375400226464a6660626466ebcc004c0d0dd51808981a1baa01230013034375401e4606e607060700022a66606200e2a66606200c2a666062002200429405280a5014a066e1c010cdc000180d99b8f375c606860626ea800405c58c044c0c0dd5180898181baa00533300837566018605e6ea80280a405cccc01cdd5980598171baa300b302e375401805002c66e1cccc018dd5980518169baa0020270150163375e601a60586ea8c024c0b0dd5001980698161baa00116302e0013300a00c2301e3330043756601060566ea800409c040c0b0c0a4dd50008a50323300100100c22533302b00114c0103d87a800013322533302a301f3330053756601260586ea8c024c0b0dd5001014008898031981700125eb804cc010010004c0b4004c0b8004888c94ccc0a4c078c0a8dd50008a400026eb4c0b8c0acdd5000992999814980f18151baa00114c103d87a8000132330010013756605e60586ea8008894ccc0b8004530103d87a8000132333222533302f337220100062a66605e66e3c02000c4c02ccc0ccdd400125eb80530103d87a8000133006006001375c605a0026eb4c0b8004c0c8008c0c0004c8cc004004010894ccc0b40045300103d87a8000132333222533302e337220100062a66605c66e3c02000c4c028cc0c8dd300125eb80530103d87a8000133006006001375c60580026eacc0b4004c0c4008c0bc004dd2a40002c60500026600800c466ebcc018c094dd5000980318129baa3002302537540064604e60500022c604a00266002008466ebcc00cc088dd50008099119198008008019129998128008a5eb804cc894ccc090c0140084cc0a0008cc0100100044cc010010004c09c004c0a00048c08c004dd61810981118110011bac3020001301c37540246eb8c078c07c008dd7180e800980c9baa00e375c603660380046eb4c068004c058dd5180c980b1baa0061616375c603000260300046eb8c058004c048dd50039b874800058c048004c048c04c004c038dd50011b874800858c03cc04000cc038008c034008c034004c020dd50008a4c26cac6eb8004dd7000ab9a5573aaae7955cfaba05742ae89",
+      "hash": "38eebd4d6190d32c5338400355e05ab8c503ae7e5ff52f4632d825e4"
+    },
+    {
+      "title": "ppbl_faucet.ppbl_faucet.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "access_token_symbol",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        },
+        {
+          "title": "faucet_token_symbol",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        }
+      ],
+      "compiledCode": "59039c0101003232323232323223223225333006323232323253323300c3001300d37540042646644a66466020600260226ea801c4c8c8c8c94ccc05cc06800854ccc050c014c054dd50030991919191919191919191919192999812181380109919192999813981500109919192999813980c18141baa0011323232533302d303000213232323232533302f30203030375400226464a6660626466ebcc004c0d0dd51808981a1baa01230013034375401e4606e607060700022a66606200e2a66606200c2a666062002200429405280a5014a066e1c010cdc000180d99b8f375c606860626ea800405c58c044c0c0dd5180898181baa00533300837566018605e6ea80280a405cccc01cdd5980598171baa300b302e375401805002c66e1cccc018dd5980518169baa0020270150163375e601a60586ea8c024c0b0dd5001980698161baa00116302e0013300a00c2301e3330043756601060566ea800409c040c0b0c0a4dd50008a50323300100100c22533302b00114c0103d87a800013322533302a301f3330053756601260586ea8c024c0b0dd5001014008898031981700125eb804cc010010004c0b4004c0b8004888c94ccc0a4c078c0a8dd50008a400026eb4c0b8c0acdd5000992999814980f18151baa00114c103d87a8000132330010013756605e60586ea8008894ccc0b8004530103d87a8000132333222533302f337220100062a66605e66e3c02000c4c02ccc0ccdd400125eb80530103d87a8000133006006001375c605a0026eb4c0b8004c0c8008c0c0004c8cc004004010894ccc0b40045300103d87a8000132333222533302e337220100062a66605c66e3c02000c4c028cc0c8dd300125eb80530103d87a8000133006006001375c60580026eacc0b4004c0c4008c0bc004dd2a40002c60500026600800c466ebcc018c094dd5000980318129baa3002302537540064604e60500022c604a00266002008466ebcc00cc088dd50008099119198008008019129998128008a5eb804cc894ccc090c0140084cc0a0008cc0100100044cc010010004c09c004c0a00048c08c004dd61810981118110011bac3020001301c37540246eb8c078c07c008dd7180e800980c9baa00e375c603660380046eb4c068004c058dd5180c980b1baa0061616375c603000260300046eb8c058004c048dd50039b874800058c048004c048c04c004c038dd50011b874800858c03cc04000cc038008c034008c034004c020dd50008a4c26cac6eb8004dd7000ab9a5573aaae7955cfaba05742ae89",
+      "hash": "38eebd4d6190d32c5338400355e05ab8c503ae7e5ff52f4632d825e4"
+    }
+  ],
+  "definitions": {
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "PolicyId": {
+      "title": "PolicyId",
+      "dataType": "bytes"
+    },
+    "VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
+    "ppbl_faucet/FaucetDatum": {
+      "title": "FaucetDatum",
+      "description": "The datum",
+      "anyOf": [
+        {
+          "title": "FaucetDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "withdrawal_amount",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "faucet_token_name",
+              "$ref": "#/definitions/ByteArray"
+            }
+          ]
+        }
+      ]
+    },
+    "ppbl_faucet/FaucetRedeemer": {
+      "title": "FaucetRedeemer",
+      "description": "The redeemer",
+      "anyOf": [
+        {
+          "title": "FaucetRedeemer",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "sender_pkh",
+              "$ref": "#/definitions/VerificationKeyHash"
+            },
+            {
+              "title": "access_token_name",
+              "$ref": "#/definitions/ByteArray"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
