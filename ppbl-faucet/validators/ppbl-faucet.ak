@@ -87,7 +87,11 @@ validator ppbl_faucet(
             faucet_token_name,
           )
         let faucet_tokens_in_output =
-          quantity_of(faucet_output.value, faucet_token_symbol, faucet_token_name)
+          quantity_of(
+            faucet_output.value,
+            faucet_token_symbol,
+            faucet_token_name,
+          )
 
         expect VerificationKey(output_key_hash) =
           ppbl_token_output.address.payment_credential
@@ -190,7 +194,6 @@ test test_ppbl_faucet_success() {
   )
 }
 
-
 fn mock_tx_wrong_faucet_amount(
   is_owner_signed: Bool,
   datum: FaucetDatum,
@@ -284,11 +287,7 @@ fn mock_tx_missing_access_token(
   mocktail_tx()
     |> tx_in(True, mock_tx_hash(1), 0, faucet_token_value_input, script_address)
     |> tx_in_inline_datum(True, datum)
-    |> tx_out(
-        True,
-        wallet_address,
-        faucet_token_value_output,
-      )
+    |> tx_out(True, wallet_address, faucet_token_value_output)
     |> tx_out(True, script_address, faucet_token_value_remaining)
     |> tx_out_inline_datum(True, datum)
     |> required_signer_hash(is_owner_signed, redeemer.sender_pkh)
@@ -321,16 +320,15 @@ test test_ppbl_faucet_fail_missing_access_token() fail {
       faucet_token_symbol,
     )
 
-    ppbl_faucet.spend(
-      access_token_symbol,
-      faucet_token_symbol,
-      Some(datum),
-      redeemer,
-      output_reference,
-      tx,
-    )
+  ppbl_faucet.spend(
+    access_token_symbol,
+    faucet_token_symbol,
+    Some(datum),
+    redeemer,
+    output_reference,
+    tx,
+  )
 }
-
 
 fn mock_tx_invalid_access_token(
   is_owner_signed: Bool,
@@ -406,7 +404,6 @@ test test_ppbl_faucet_fail_invalid_access_token() fail {
   )
 }
 
-
 fn mock_tx_invalid_faucet_token(
   is_owner_signed: Bool,
   datum: FaucetDatum,
@@ -480,7 +477,6 @@ test test_ppbl_faucet_fail_invalid_faucet_token() fail {
     tx,
   )
 }
-
 
 fn mock_tx_wrong_sender_pkh(
   is_owner_signed: Bool,
