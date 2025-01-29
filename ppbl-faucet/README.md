@@ -117,7 +117,7 @@ $ npm intall
 
 Notes: There will be some deprecated and security warnings that you can ignore for now since this only used for testing purposes.
 
-Now run the faucet end-to-end test case using the yaci devkit local devnet.
+Now run the faucet end-to-end integration test cases using the yaci devkit local devnet.
 ```
 $ npm test
 ```
