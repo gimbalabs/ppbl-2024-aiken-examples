@@ -36,6 +36,7 @@ describe('E2E Faucet Test', () => {
 const address = wallet.getChangeAddress();
         console.log("Wallet Address:", address);
         await provider.addressTopup(address, "200_000") 
+        await provider.addressTopup(address, "5_000")
         await sleep(2);
     });
 

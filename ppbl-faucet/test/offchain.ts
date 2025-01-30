@@ -172,9 +172,6 @@ export class MeshTx {
                     { unit: "lovelace", quantity: "2000000" },
                     { unit: mintTokenPolicy + tokenNameHex, quantity: quantity.toString() },
                   ])
-                .txOut(walletAddress, [
-                    { unit: "lovelace", quantity: "5000000" },
-                  ]) /// leave 5 ada for collateral
                 .complete();
 
             console.log("Transaction built successfully");
@@ -220,9 +217,6 @@ export class MeshTx {
                     ]
                 )
                 .txOutInlineDatumValue(mConStr0([withdrawalAmount, faucetTokenNameHex]))
-                .txOut(walletAddress, [
-                    { unit: "lovelace", quantity: "5000000" },
-                  ]) /// leave 5 ada for collateral
                 .complete();
 
             console.log("Transaction built successfully");
