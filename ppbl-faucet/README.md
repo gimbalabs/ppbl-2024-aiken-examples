@@ -61,6 +61,12 @@ devnet:default>info
 Install Aiken using the instructions 
 https://aiken-lang.org/installation-instructions
 
+Confirm your aiken version
+```
+$ aiken --version
+aiken v1.1.10+b25afa2
+```
+
 Now download the ppbl-faucet code
 ```
 $ git clone https://github.com/gimbalabs/ppbl-2024-aiken-examples.git
