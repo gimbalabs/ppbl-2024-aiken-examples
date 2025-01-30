@@ -140,12 +140,18 @@ Time:        30.607 s
 Ran all test suites.
 ```
 
-You can also go to the Yaci viewer http://localhost:5173/ and confim the transactions as well.
+In the terminal window runnign yaci devkit, you can query the utxos at and address using the following command
+```
+devnet:default>utxos addr_test1qz3y5kacdctuxzczarxu2t3c9jswawm4xtp3n26t6l9qelyh40hlltg24lyeuw9mk3e6p7fs58sv852zmp5suuk85s9qmzzvlm
+1. 4ce6cf1d49c1108c980151e0ab793ecedab297a90aeeba478e61eb3a131e0c47#1 : [Amount(unit=lovelace, quantity=2000000), Amount(unit=b10b3a5a819392a156d0190ba4a5c34f1706bad47c8ed404dfe193e16163636573732d746f6b656e, quantity=1), Amount(unit=bb07253073ca06fb0b2704c41ad26a869ec303dd12f39d4409639a366661756365742d746f6b656e, quantity=100)]
+--------------------------------------------------------------------------------------
+2. 4ce6cf1d49c1108c980151e0ab793ecedab297a90aeeba478e61eb3a131e0c47#2 : [Amount(unit=lovelace, quantity=5000000)]
+```
+
+You can also go to the Yaci viewer http://localhost:5173/ and view the transactions as well.
 
 ![image](https://github.com/user-attachments/assets/871ee952-9945-4d79-9ad3-ad569252a911)
 
 ![image](https://github.com/user-attachments/assets/9c6c96e5-ae4b-4a92-8a81-54c97d47387f)
-
-
 
 
