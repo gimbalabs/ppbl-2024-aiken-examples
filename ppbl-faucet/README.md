@@ -20,7 +20,7 @@ $ ./bin/devkit.sh start
 yaci-cli:>create-node -o --era conway
 devnet:default>start
 ```
-This will start up a local cardano node and devnet.  Wait for the ```Yaci Store Started`` to appear on the terminal
+This will start up a local cardano node and devnet.  Wait for the ```Yaci Store Started``` to appear on the terminal
 
 
 You can find out the API and URLs by using the ```info``` command
