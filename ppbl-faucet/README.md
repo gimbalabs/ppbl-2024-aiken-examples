@@ -61,7 +61,7 @@ devnet:default>info
 Install Aiken using the instructions 
 https://aiken-lang.org/installation-instructions
 
-Note: If you get the following error on Intel Mac, then you will need to compile aiken from the source code.
+Note: If you get the following error with Linux on Intel Mac, then you will need to compile aiken from the source code.
 ```
 $ aiken check
     Compiling test/test-proj 0.0.0 (.)
