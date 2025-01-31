@@ -131,10 +131,14 @@ $ aiken check
 ```
 
 #### Install NPM and Node modules
+Open a new terminal window
 ```
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-$ nvm use v22.13.0
-$ npm intall
+```
+Close and then open a new terminal window
+```
+$ nvm install v22.13.0
+$ npm install
 ```
 
 Notes: There will be some deprecated and security warnings that you can ignore for now since this only used for testing purposes.
