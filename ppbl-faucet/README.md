@@ -61,10 +61,26 @@ devnet:default>info
 Install Aiken using the instructions 
 https://aiken-lang.org/installation-instructions
 
+Note: If you get the following error on Intel Mac, then you will need to compile aiken from the source code.
+```
+$ aiken check
+    Compiling test/test-proj 0.0.0 (.)
+    Compiling aiken-lang/stdlib v2.2.0 (./build/packages/aiken-lang-stdlib)
+Illegal instruction (core dumped)
+
+$ git clone https://github.com/aiken-lang/aiken.git
+$ sudo apt install cargo
+$ sudo apt install rustup
+$ rustup default stable
+$ sudo apt-get install libssl-dev pkg-config
+$ RUSTFLAGS="-C target-cpu=native" cargo install aiken --version 1.1.9
+$ cp ~/.cargo/bin/aiken ~/.aiken/bin
+```
+
 Confirm your aiken version
 ```
 $ aiken --version
-aiken v1.1.10+b25afa2
+aiken aiken v1.1.9...
 ```
 
 Now download the ppbl-faucet code
