@@ -22,7 +22,7 @@ import {
 } from "@meshsdk/core";
 
 
-import blueprint from "../plutus.json";
+import blueprint from "./plutus.json";
 const languageVersion = "V3";
 
 //const apiKey = process.env.BLOCKFROST_KEY as string;

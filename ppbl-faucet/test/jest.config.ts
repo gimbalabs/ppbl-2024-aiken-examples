@@ -4,7 +4,7 @@ const config: Config = {
   clearMocks: true,
   maxWorkers: 1,
   testEnvironment: "node",
-  testMatch: ["**/test/**/*.test.ts"],
+  testMatch: ["**.test.ts"],
   preset: "ts-jest",
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
