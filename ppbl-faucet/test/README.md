@@ -86,8 +86,7 @@ aiken aiken v1.1.9...
 Now download the ppbl-faucet code
 ```
 $ git clone https://github.com/gimbalabs/ppbl-2024-aiken-examples.git
-$ cd ppbl-2024-aiken-examples/ppbl-faucet/
-$ git checkout ppbl2025
+$ cd ppbl-2024-aiken-examples/ppbl-faucet/test
 ```
 
 First run the unit tests within validators/ppbl-faucet.ak

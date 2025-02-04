@@ -3,7 +3,7 @@
         "clean": "rm -rf dist && rm -rf node_modules && rm package-lock.json",
         "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
         "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-        "test": "jest"
+        "test": "jest --no-watch"
     },
     "dependencies": {
         "@meshsdk/core": "1.8.12",

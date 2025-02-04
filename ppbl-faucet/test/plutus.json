@@ -1,8 +1,8 @@
 {
   "preamble": {
-    "title": "gimbalabs/ppbl-faucet",
-    "description": "Aiken contracts for project 'gimbalabs/ppbl-faucet'",
-    "version": "0.1.0",
+    "title": "ppbl-faucet/test",
+    "description": "Aiken contracts for project 'gimbalabs/ppbl-faucet/test'",
+    "version": "0.0.1",
     "plutusVersion": "v3",
     "compiler": {
       "name": "Aiken",
@@ -11,6 +11,53 @@
     "license": "Apache-2.0"
   },
   "validators": [
+    {
+      "title": "one_shot.one_shot.mint",
+      "redeemer": {
+        "title": "rdmr",
+        "schema": {
+          "$ref": "#/definitions/one_shot~1Action"
+        }
+      },
+      "parameters": [
+        {
+          "title": "token_name",
+          "schema": {
+            "$ref": "#/definitions/ByteArray"
+          }
+        },
+        {
+          "title": "utxo_ref",
+          "schema": {
+            "$ref": "#/definitions/cardano~1transaction~1OutputReference"
+          }
+        }
+      ],
+      "compiledCode": "59019001010032323232323232232225333005323232323253323300b3001300c37540042646464a66601c60080022a66602260206ea80180085854ccc038cdc3a40040022a66602260206ea80180085858c038dd50028991919192999809980b0010992999808980398091baa00915333011300730123754646600200200a44a66602c002298103d87a80001332253330153375e6034602e6ea80080484cdd2a40006603200497ae01330040040013018001301900113371e00201e2c266e3c00403cdd718088008b180a00099299980799b8748008c040dd50008a5eb7bdb1804dd5980a18089baa001323300100137566028602a602a602a602a00644a666026002298103d87a80001323332225333014337220120062a66602866e3c02400c4cdd2a4000660306e980092f5c02980103d87a8000133006006001375c60240026eacc04c004c05c008c054004dd6180900098071baa005375c6020601a6ea8008dc3a40002c601c601e006601a00460180046018002600e6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
+      "hash": "565c9c79fe7e5bd692a623607fc83126977ac4d7a6b85b1eb483c9d7"
+    },
+    {
+      "title": "one_shot.one_shot.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "token_name",
+          "schema": {
+            "$ref": "#/definitions/ByteArray"
+          }
+        },
+        {
+          "title": "utxo_ref",
+          "schema": {
+            "$ref": "#/definitions/cardano~1transaction~1OutputReference"
+          }
+        }
+      ],
+      "compiledCode": "59019001010032323232323232232225333005323232323253323300b3001300c37540042646464a66601c60080022a66602260206ea80180085854ccc038cdc3a40040022a66602260206ea80180085858c038dd50028991919192999809980b0010992999808980398091baa00915333011300730123754646600200200a44a66602c002298103d87a80001332253330153375e6034602e6ea80080484cdd2a40006603200497ae01330040040013018001301900113371e00201e2c266e3c00403cdd718088008b180a00099299980799b8748008c040dd50008a5eb7bdb1804dd5980a18089baa001323300100137566028602a602a602a602a00644a666026002298103d87a80001323332225333014337220120062a66602866e3c02400c4cdd2a4000660306e980092f5c02980103d87a8000133006006001375c60240026eacc04c004c05c008c054004dd6180900098071baa005375c6020601a6ea8008dc3a40002c601c601e006601a00460180046018002600e6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
+      "hash": "565c9c79fe7e5bd692a623607fc83126977ac4d7a6b85b1eb483c9d7"
+    },
     {
       "title": "ppbl_faucet.ppbl_faucet.spend",
       "datum": {
@@ -79,6 +126,44 @@
     "VerificationKeyHash": {
       "title": "VerificationKeyHash",
       "dataType": "bytes"
+    },
+    "cardano/transaction/OutputReference": {
+      "title": "OutputReference",
+      "description": "An `OutputReference` is a unique reference to an output on-chain. The `output_index`\n corresponds to the position in the output list of the transaction (identified by its id)\n that produced that output",
+      "anyOf": [
+        {
+          "title": "OutputReference",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "transaction_id",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "output_index",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    },
+    "one_shot/Action": {
+      "title": "Action",
+      "anyOf": [
+        {
+          "title": "Mint",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Burn",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
     },
     "ppbl_faucet/FaucetDatum": {
       "title": "FaucetDatum",
