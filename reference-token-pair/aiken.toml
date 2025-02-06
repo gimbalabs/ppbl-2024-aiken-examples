@@ -1,7 +1,7 @@
 name = "ppbl-2024-aiken-examples/reference-token-pair"
-version = "0.0.0"
-compiler = "v1.0.29-alpha"
-plutus = "v2"
+version = "0.1.0"
+compiler = "v1.1.9"
+plutus = "v3"
 license = "Apache-2.0"
 description = "Aiken contracts for project 'ppbl-2024-aiken-examples/reference-token-pair'"
 
@@ -12,10 +12,10 @@ platform = "github"
 
 [[dependencies]]
 name = "aiken-lang/stdlib"
-version = "1.9.0"
+version = "v2.2.0"
 source = "github"
 
 [[dependencies]]
-name = "sidan-lab/aiken-utils"
-version = "0.1.5-beta"
+name = "sidan-lab/vodka"
+version = "0.1.10"
 source = "github"
