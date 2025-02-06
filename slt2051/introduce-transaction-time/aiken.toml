@@ -1,6 +1,6 @@
 name = "ppbl2024/introduce-transaction-time"
-version = "0.0.0"
-compiler = "v1.1.5"
+version = "0.1.0"
+compiler = "v1.1.9"
 plutus = "v3"
 license = "Apache-2.0"
 description = "Aiken contracts for project 'ppbl2024/introduce-transaction-time'"
@@ -12,7 +12,12 @@ platform = "github"
 
 [[dependencies]]
 name = "aiken-lang/stdlib"
-version = "v2.1.0"
+version = "v2.2.0"
+source = "github"
+
+[[dependencies]]
+name = "sidan-lab/vodka"
+version = "0.1.10"
 source = "github"
 
 [config]
