@@ -25,7 +25,6 @@ validator introduce_transaction_time {
   }
 
   else(_) {
-    trace @"tx purpose not supported"
     fail
   }
 }
