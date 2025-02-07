@@ -15,12 +15,7 @@ use mocktail/virgin_output_reference.{mock_tx_hash, mock_utxo_ref}
 // Require spending. For any other script purpose, fail
 
 validator introduce_transaction_time {
-  spend(
-    _datum_opt: Option<Data>,
-    _redeemer: Data,
-    _oref: OutputReference,
-    tx: Transaction,
-  ) {
+  spend(_datum, _redeemer, _input: OutputReference, tx: Transaction) {
     let Transaction { validity_range, .. } = tx
     // Change this value
     // Use https://www.epochconverter.com/
