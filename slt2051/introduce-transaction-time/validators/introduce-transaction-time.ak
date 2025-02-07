@@ -1,7 +1,8 @@
 use aiken/interval.{Finite}
 use cardano/address.{Address}
 use cardano/assets.{from_lovelace}
-use cardano/transaction.{OutputReference, Transaction, ValidityRange} as tx
+use cardano/script_context.{ScriptContext, Spending}
+use cardano/transaction.{Transaction, ValidityRange} as tx
 use mocktail.{
   complete, invalid_before, mocktail_tx, tx_in, tx_in_inline_datum, tx_out,
 }
@@ -17,23 +18,13 @@ use mocktail/virgin_output_reference.{mock_tx_hash, mock_utxo_ref}
 // Example 205.1: I can write a validator that succeeds after a specified time.
 
 validator introduce_transaction_time {
-  spend(
-    _datum_opt: Option<Data>,
-    _redeemer: Data,
-    _oref: OutputReference,
-    tx: Transaction,
-  ) {
-    let Transaction { validity_range, .. } = tx
+  else(context: ScriptContext) {
+    let Transaction { validity_range, .. } = context.transaction
     // Change this value
     // Use https://www.epochconverter.com/
     let lock_until = 1729697422000
 
     must_start_after(validity_range, lock_until)
-  }
-
-  else(_) {
-    trace @"tx purpose not supported"
-    fail
   }
 }
 
@@ -70,8 +61,10 @@ test test_unlock_after_lock_time_success() {
   let redeemer: Data = []
   let output_reference = mock_utxo_ref(0, 0)
   let tx = mock_tx_unlock(now_time, datum, wallet_address, script_address)
+  let script_info = Spending { output: output_reference, datum: Some(datum) }
+  let context = ScriptContext { transaction: tx, redeemer, info: script_info }
 
-  introduce_transaction_time.spend(Some(datum), redeemer, output_reference, tx)
+  introduce_transaction_time.else(context)
 }
 
 /// at lock time
@@ -83,8 +76,10 @@ test test_unlock_at_lock_time_success() {
   let redeemer: Data = []
   let output_reference = mock_utxo_ref(0, 0)
   let tx = mock_tx_unlock(now_time, datum, wallet_address, script_address)
+  let script_info = Spending { output: output_reference, datum: Some(datum) }
+  let context = ScriptContext { transaction: tx, redeemer, info: script_info }
 
-  introduce_transaction_time.spend(Some(datum), redeemer, output_reference, tx)
+  introduce_transaction_time.else(context)
 }
 
 /// before lock time
@@ -96,6 +91,8 @@ test test_unlock_before_lock_time_fail() fail {
   let redeemer: Data = []
   let output_reference = mock_utxo_ref(0, 0)
   let tx = mock_tx_unlock(now_time, datum, wallet_address, script_address)
+  let script_info = Spending { output: output_reference, datum: Some(datum) }
+  let context = ScriptContext { transaction: tx, redeemer, info: script_info }
 
-  introduce_transaction_time.spend(Some(datum), redeemer, output_reference, tx)
+  introduce_transaction_time.else(context)
 }
