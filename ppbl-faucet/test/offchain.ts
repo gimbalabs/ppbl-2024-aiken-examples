@@ -71,9 +71,9 @@ const mintContractCbor = (
     );
   };
 
-const faucetContractCbor = (tokenNameHex: string, policyId: string) => {
+const faucetContractCbor = (accessTokenPolicy: string, faucetTokenPolicy: string) => {
     let scriptCbor = blueprint.validators[2]!.compiledCode;
-    return applyParamsToScript(scriptCbor, [tokenNameHex, policyId]);
+    return applyParamsToScript(scriptCbor, [accessTokenPolicy, faucetTokenPolicy]);
 };
 
 export class MeshTx {
