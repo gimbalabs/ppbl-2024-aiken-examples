@@ -1,13 +1,13 @@
-name = "ppbl2024/introduce-transaction-time"
+name = "ppbl-2024-aiken-examples/reference-token-pair"
 version = "0.1.0"
 compiler = "v1.1.9"
 plutus = "v3"
 license = "Apache-2.0"
-description = "Aiken contracts for project 'ppbl2024/introduce-transaction-time'"
+description = "Aiken contracts for project 'ppbl-2024-aiken-examples/reference-token-pair'"
 
 [repository]
-user = "ppbl2024"
-project = "introduce-transaction-time"
+user = "ppbl-2024-aiken-examples"
+project = "reference-token-pair"
 platform = "github"
 
 [[dependencies]]
@@ -19,5 +19,3 @@ source = "github"
 name = "sidan-lab/vodka"
 version = "0.1.10"
 source = "github"
-
-[config]
