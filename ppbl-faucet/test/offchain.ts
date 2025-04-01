@@ -1,11 +1,7 @@
 import {
     applyCborEncoding,
     applyParamsToScript,
-    parseDatumCbor
-} from "@meshsdk/core-csl";
-import {
     AppWalletKeyType,
-    BlockfrostProvider,
     YaciProvider,
     deserializeAddress,
     MeshWallet,
@@ -19,6 +15,7 @@ import {
     resolveScriptHash,
     Integer,
     ConStr0,
+    deserializeDatum,
 } from "@meshsdk/core";
 
 
@@ -32,7 +29,7 @@ const languageVersion = "V3";
 //export const provider = new BlockfrostProvider(apiKey);
 export const provider = new YaciProvider('http://localhost:8080/api/v1', 'http://localhost:10000');
 
-export const newWallet = (providedMnemonic?: string[]) => {
+export const newWallet = async (providedMnemonic?: string[]) => {
   let mnemonic = providedMnemonic;
   if (!providedMnemonic) {
       mnemonic = MeshWallet.brew() as string[];
@@ -53,6 +50,7 @@ export const newWallet = (providedMnemonic?: string[]) => {
           submitter: provider,
       });
 
+  await wallet.init()
   return wallet;
 };
 
@@ -92,7 +90,7 @@ export class MeshTx {
     }
   
     newTx = async () => {
-      const address = this.wallet.getChangeAddress();
+      const address = await this.wallet.getChangeAddress();
   
       const txBuilder = new MeshTxBuilder({
         fetcher: this.provider,
@@ -133,7 +131,7 @@ export class MeshTx {
         quantity: bigint,
     ) => {
         try {
-            const walletAddress = this.wallet.getChangeAddress();
+            const walletAddress = await this.wallet.getChangeAddress();
             console.log("WalletAddress:", walletAddress);
             const tokenNameHex = stringToHex(tokenName);
             const utxos = await this.provider.fetchAddressUTxOs(walletAddress);
@@ -242,7 +240,7 @@ export class MeshTx {
         try {
             let datum: ConStr0<[Integer, string]> | null = null;
             let faucetAmount: string | undefined;
-            const walletAddress = this.wallet.getChangeAddress();
+            const walletAddress = await this.wallet.getChangeAddress();
             const ownPubKey = deserializeAddress(walletAddress).pubKeyHash;
             const faucetContractScript: PlutusScript = {
                 code: faucetContractCbor(accessTokenPolicy, faucetTokenPolicy),
@@ -256,7 +254,7 @@ export class MeshTx {
                 await this.provider.fetchAddressUTxOs(faucetScriptAddress)
               ).find((input) => {
                 if (input.output.plutusData) {
-                  datum = parseDatumCbor(input.output.plutusData);
+                  datum = deserializeDatum(input.output.plutusData);
                   faucetAmount = input.output.amount.find((amount) => amount.unit === faucetTokenPolicy + faucetTokenNameHex)?.quantity;
                   return input;
                 }
