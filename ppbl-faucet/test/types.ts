@@ -30,7 +30,7 @@ export class OneShotMintBlueprint extends MintingBlueprint {
   }
 
   param = (
-    data: [ByteString, OutputReference]
+    data: [ByteString, OutputReference],
   ): [ByteString, OutputReference] => data;
 }
 

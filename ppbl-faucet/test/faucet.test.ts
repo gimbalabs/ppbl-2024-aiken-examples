@@ -36,7 +36,7 @@ describe("E2E Faucet Test", () => {
     await provider.addressTopup(address, "200_000");
     await provider.addressTopup(address, "5_000");
     await sleep(2);
-  },100000);
+  }, 100000);
 
   afterAll(async () => {
     console.log("Counter Test Finished");
@@ -72,7 +72,7 @@ describe("E2E Faucet Test", () => {
       faucetLockedAmount,
       faucetTokenHex,
       faucetTokenPolicy,
-      accessTokenPolicy
+      accessTokenPolicy,
     );
     console.log("\n--- After Lock Faucet Token Tx ---");
     console.log({ result });
@@ -87,7 +87,7 @@ describe("E2E Faucet Test", () => {
       faucetTokenHex,
       faucetTokenPolicy,
       accessTokenHex,
-      accessTokenPolicy
+      accessTokenPolicy,
     );
     console.log("\n--- After Withdrawal Faucet Token Tx ---");
     console.log({ result });
@@ -102,7 +102,7 @@ describe("E2E Faucet Test", () => {
       faucetTokenHex,
       faucetTokenPolicy,
       accessTokenHex,
-      accessTokenPolicy
+      accessTokenPolicy,
     );
     console.log("\n--- After Withdrawal Faucet Token Tx ---");
     console.log({ result });
@@ -114,11 +114,11 @@ describe("E2E Faucet Test", () => {
     console.log({ balance });
     expect(
       balance.find((b) => b.unit === faucetTokenPolicy + faucetTokenHex)
-        ?.quantity
+        ?.quantity,
     ).toBe("200");
     expect(
       balance.find((b) => b.unit === accessTokenPolicy + accessTokenHex)
-        ?.quantity
+        ?.quantity,
     ).toBe("1");
   });
 });

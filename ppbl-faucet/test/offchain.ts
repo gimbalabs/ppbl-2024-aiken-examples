@@ -10,15 +10,14 @@ import {
   mConStr0,
   outputReference,
   stringToHex,
-  YaciProvider
+  YaciProvider,
 } from "@meshsdk/core";
 
-import { 
-  version, 
-  OneShotMintBlueprint, 
-  PpblFaucetSpendBlueprint 
+import {
+  version,
+  OneShotMintBlueprint,
+  PpblFaucetSpendBlueprint,
 } from "./types";
-
 
 //const apiKey = process.env.BLOCKFROST_KEY as string;
 //        if (!apiKey) {
@@ -27,7 +26,7 @@ import {
 //export const provider = new BlockfrostProvider(apiKey);
 export const provider = new YaciProvider(
   "http://localhost:8080/api/v1",
-  "http://localhost:10000"
+  "http://localhost:10000",
 );
 
 export const newWallet = async (providedMnemonic?: string[]) => {
@@ -35,7 +34,7 @@ export const newWallet = async (providedMnemonic?: string[]) => {
   if (!providedMnemonic) {
     mnemonic = MeshWallet.brew() as string[];
     console.log(
-      "Wallet generated, if you want to reuse the same address, please save the mnemonic:"
+      "Wallet generated, if you want to reuse the same address, please save the mnemonic:",
     );
     console.log(mnemonic);
   }
@@ -61,7 +60,7 @@ export class MeshTx {
     //public provider: BlockfrostProvider,
     public provider: YaciProvider,
     public networkId: number,
-    public stakeCredential?: string | null
+    public stakeCredential?: string | null,
   ) {
     this.wallet = wallet;
     this.provider = provider;
@@ -89,7 +88,7 @@ export class MeshTx {
         collateral.input.txHash,
         collateral.input.outputIndex,
         collateral.output.amount,
-        collateral.output.address
+        collateral.output.address,
       );
       return txBuilder;
     } else {
@@ -108,7 +107,10 @@ export class MeshTx {
 
       const mintTokenScript = new OneShotMintBlueprint([
         builtinByteString(tokenNameHex),
-        outputReference(firstUtxo?.input.txHash ?? "", firstUtxo?.input.outputIndex ?? 0)
+        outputReference(
+          firstUtxo?.input.txHash ?? "",
+          firstUtxo?.input.outputIndex ?? 0,
+        ),
       ]);
 
       // Log for debugging
@@ -122,7 +124,7 @@ export class MeshTx {
           firstUtxo?.input.txHash ?? "",
           firstUtxo?.input.outputIndex ?? 0,
           firstUtxo?.output.amount ?? [],
-          firstUtxo?.output.address ?? ""
+          firstUtxo?.output.address ?? "",
         )
         .mintPlutusScript(version)
         .mint(quantity.toString(), mintTokenScript.hash, tokenNameHex)
@@ -156,12 +158,12 @@ export class MeshTx {
     faucetLockedAmount: bigint,
     faucetTokenNameHex: string,
     faucetTokenPolicy: string,
-    accessTokenPolicy: string
+    accessTokenPolicy: string,
   ) => {
     try {
       const faucetScript = new PpblFaucetSpendBlueprint([
         builtinByteString(accessTokenPolicy),
-        builtinByteString(faucetTokenPolicy)
+        builtinByteString(faucetTokenPolicy),
       ]);
       const faucetScriptAddress = faucetScript.address;
 
@@ -198,7 +200,7 @@ export class MeshTx {
     faucetTokenNameHex: string,
     faucetTokenPolicy: string,
     accessTokenNameHex: string,
-    accessTokenPolicy: string
+    accessTokenPolicy: string,
   ) => {
     try {
       let datum: ConStr0<[Integer, string]> | null = null;
@@ -208,7 +210,7 @@ export class MeshTx {
 
       const faucetScript = new PpblFaucetSpendBlueprint([
         builtinByteString(accessTokenPolicy),
-        builtinByteString(faucetTokenPolicy)
+        builtinByteString(faucetTokenPolicy),
       ]);
       const faucetScriptAddress = faucetScript.address;
       console.log("FaucetScriptAddress:", faucetScriptAddress);
@@ -219,7 +221,7 @@ export class MeshTx {
         if (input.output.plutusData) {
           datum = deserializeDatum(input.output.plutusData);
           faucetAmount = input.output.amount.find(
-            (amount) => amount.unit === faucetTokenPolicy + faucetTokenNameHex
+            (amount) => amount.unit === faucetTokenPolicy + faucetTokenNameHex,
           )?.quantity;
           return input;
         }
@@ -243,7 +245,7 @@ export class MeshTx {
           scriptInput!.input.txHash,
           scriptInput!.input.outputIndex,
           scriptInput!.output.amount,
-          scriptInput!.output.address
+          scriptInput!.output.address,
         )
         .txInInlineDatumPresent()
         .txInScript(faucetScript.cbor)

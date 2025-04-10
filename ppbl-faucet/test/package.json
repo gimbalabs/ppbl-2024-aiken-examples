@@ -1,8 +1,8 @@
 {
     "scripts": {
         "clean": "rm -rf dist && rm -rf node_modules && rm package-lock.json",
-        "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-        "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
+        "lint:fix": "prettier \"**/*.{js,ts}\" -w",
+        "lint": "prettier \"**/*.{js,ts}\" --check",
         "test": "jest --no-watch"
     },
     "dependencies": {
