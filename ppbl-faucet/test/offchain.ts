@@ -1,25 +1,24 @@
 import {
-  applyCborEncoding,
-  applyParamsToScript,
   AppWalletKeyType,
-  YaciProvider,
+  builtinByteString,
+  ConStr0,
+  deserializeDatum,
+  Integer,
   deserializeAddress,
   MeshWallet,
   MeshTxBuilder,
   mConStr0,
-  builtinByteString,
-  PlutusScript,
-  serializePlutusScript,
-  stringToHex,
   outputReference,
-  resolveScriptHash,
-  Integer,
-  ConStr0,
-  deserializeDatum,
+  stringToHex,
+  YaciProvider
 } from "@meshsdk/core";
 
-import blueprint from "./plutus.json";
-const languageVersion = "V3";
+import { 
+  version, 
+  OneShotMintBlueprint, 
+  PpblFaucetSpendBlueprint 
+} from "./types";
+
 
 //const apiKey = process.env.BLOCKFROST_KEY as string;
 //        if (!apiKey) {
@@ -54,32 +53,6 @@ export const newWallet = async (providedMnemonic?: string[]) => {
 
   await wallet.init();
   return wallet;
-};
-
-const mintContractCbor = (
-  tokenNameHex: string,
-  utxoTxHash: string,
-  utxoTxId: number
-) => {
-  let scriptCbor = blueprint.validators[1]!.compiledCode;
-  let utxo = outputReference(utxoTxHash, utxoTxId);
-
-  return applyParamsToScript(
-    scriptCbor,
-    [builtinByteString(tokenNameHex), utxo],
-    "JSON"
-  );
-};
-
-const faucetContractCbor = (
-  accessTokenPolicy: string,
-  faucetTokenPolicy: string
-) => {
-  let scriptCbor = blueprint.validators[2]!.compiledCode;
-  return applyParamsToScript(scriptCbor, [
-    accessTokenPolicy,
-    faucetTokenPolicy,
-  ]);
 };
 
 export class MeshTx {
@@ -124,15 +97,6 @@ export class MeshTx {
     }
   };
 
-  getScriptAddress = (scriptCbor: string) => {
-    const { address } = serializePlutusScript(
-      { code: scriptCbor, version: languageVersion },
-      this.stakeCredential ?? undefined,
-      this.networkId
-    );
-    return address;
-  };
-
   mint = async (tokenName: string, quantity: bigint) => {
     try {
       const walletAddress = await this.wallet.getChangeAddress();
@@ -142,20 +106,14 @@ export class MeshTx {
       if (utxos.length < 1) throw new Error("No UTXOs available");
       const firstUtxo = utxos[0];
 
-      const mintTokenScript = mintContractCbor(
-        tokenNameHex,
-        firstUtxo?.input.txHash ?? "",
-        firstUtxo?.input.outputIndex ?? 0
-      );
-
-      const mintTokenPolicy = resolveScriptHash(
-        mintTokenScript,
-        languageVersion
-      );
+      const mintTokenScript = new OneShotMintBlueprint([
+        builtinByteString(tokenNameHex),
+        outputReference(firstUtxo?.input.txHash ?? "", firstUtxo?.input.outputIndex ?? 0)
+      ]);
 
       // Log for debugging
       console.log("Building mint transaction...");
-      console.log("MintTokenPolicy:", mintTokenPolicy);
+      console.log("MintTokenPolicy:", mintTokenScript.hash);
       console.log("TokenNameHex:", tokenNameHex);
       console.log("Quantity:", quantity);
       const txBuilder = await this.newValidationTx();
@@ -166,14 +124,14 @@ export class MeshTx {
           firstUtxo?.output.amount ?? [],
           firstUtxo?.output.address ?? ""
         )
-        .mintPlutusScript(languageVersion)
-        .mint(quantity.toString(), mintTokenPolicy, tokenNameHex)
-        .mintingScript(mintTokenScript)
+        .mintPlutusScript(version)
+        .mint(quantity.toString(), mintTokenScript.hash, tokenNameHex)
+        .mintingScript(mintTokenScript.cbor)
         .mintRedeemerValue(mConStr0([]))
         .txOut(walletAddress, [
           { unit: "lovelace", quantity: "2000000" },
           {
-            unit: mintTokenPolicy + tokenNameHex,
+            unit: mintTokenScript.hash + tokenNameHex,
             quantity: quantity.toString(),
           },
         ])
@@ -185,7 +143,7 @@ export class MeshTx {
       return {
         txHash,
         tokenNameHex,
-        mintTokenPolicy,
+        mintingPolicy: mintTokenScript.hash,
       };
     } catch (error) {
       console.error("Error in mint transaction:", error);
@@ -201,13 +159,11 @@ export class MeshTx {
     accessTokenPolicy: string
   ) => {
     try {
-      const walletAddress = this.wallet.getChangeAddress();
-      const faucetContractScript: PlutusScript = {
-        code: faucetContractCbor(accessTokenPolicy, faucetTokenPolicy),
-        version: languageVersion,
-      };
-      const faucetScriptCbor = applyCborEncoding(faucetContractScript.code);
-      const faucetScriptAddress = this.getScriptAddress(faucetScriptCbor);
+      const faucetScript = new PpblFaucetSpendBlueprint([
+        builtinByteString(accessTokenPolicy),
+        builtinByteString(faucetTokenPolicy)
+      ]);
+      const faucetScriptAddress = faucetScript.address;
 
       // Log for debugging
       console.log("Building lock transaction with datum...");
@@ -249,12 +205,12 @@ export class MeshTx {
       let faucetAmount: string | undefined;
       const walletAddress = await this.wallet.getChangeAddress();
       const ownPubKey = deserializeAddress(walletAddress).pubKeyHash;
-      const faucetContractScript: PlutusScript = {
-        code: faucetContractCbor(accessTokenPolicy, faucetTokenPolicy),
-        version: languageVersion,
-      };
-      const faucetScriptCbor = applyCborEncoding(faucetContractScript.code);
-      const faucetScriptAddress = this.getScriptAddress(faucetScriptCbor);
+
+      const faucetScript = new PpblFaucetSpendBlueprint([
+        builtinByteString(accessTokenPolicy),
+        builtinByteString(faucetTokenPolicy)
+      ]);
+      const faucetScriptAddress = faucetScript.address;
       console.log("FaucetScriptAddress:", faucetScriptAddress);
 
       const scriptInput = (
@@ -290,7 +246,7 @@ export class MeshTx {
           scriptInput!.output.address
         )
         .txInInlineDatumPresent()
-        .txInScript(faucetScriptCbor)
+        .txInScript(faucetScript.cbor)
         .txInRedeemerValue(mConStr0([ownPubKey, accessTokenNameHex]))
         .txOut(faucetScriptAddress, [
           { unit: "lovelace", quantity: "2000000" },

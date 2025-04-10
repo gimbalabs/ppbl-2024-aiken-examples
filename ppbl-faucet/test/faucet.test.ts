@@ -1,5 +1,8 @@
 import { describe, expect, it } from "@jest/globals";
 import { MeshTx, newWallet, provider } from "./offchain";
+import { MeshWallet } from "@meshsdk/core";
+
+import { networkId } from "./types";
 
 /*
 const seed = [
@@ -12,11 +15,9 @@ const seed = [
     'present',    'recall',   'lava',
     'often',      'above',    'rubber',
 ]
-const wallet = newWallet(seed);
 */
 
-const wallet = await newWallet();
-const networkId = 0; // set to 0 for testnet, 1 for mainnet
+let wallet: MeshWallet;
 
 describe("E2E Faucet Test", () => {
   console.log("Starting E2E Faucet Test");
@@ -28,12 +29,14 @@ describe("E2E Faucet Test", () => {
   const faucetLockedAmount = 1000000n;
 
   beforeAll(async () => {
+    wallet = await newWallet();
+    //wallet = newWallet(seed);
     const address = await wallet.getChangeAddress();
     console.log("Wallet Address:", address);
     await provider.addressTopup(address, "200_000");
     await provider.addressTopup(address, "5_000");
     await sleep(2);
-  });
+  },100000);
 
   afterAll(async () => {
     console.log("Counter Test Finished");
@@ -46,7 +49,7 @@ describe("E2E Faucet Test", () => {
     console.log("\n--- After Mint Access Token Tx ---");
     console.log({ result });
     accessTokenHex = result.tokenNameHex;
-    accessTokenPolicy = result.mintTokenPolicy;
+    accessTokenPolicy = result.mintingPolicy;
     await sleep(2);
   }, 100000);
 
@@ -57,7 +60,7 @@ describe("E2E Faucet Test", () => {
     console.log("\n--- After Mint Faucet Token Tx ---");
     console.log({ result });
     faucetTokenHex = result.tokenNameHex;
-    faucetTokenPolicy = result.mintTokenPolicy;
+    faucetTokenPolicy = result.mintingPolicy;
     await sleep(2);
   }, 100000);
 

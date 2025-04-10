@@ -11,7 +11,7 @@ In a terminal window, download the yaci-devkit Github repo
 ```
 $ git clone https://github.com/bloxbean/yaci-devkit.git
 $ cd yaci-devkit
-$ git checkout v0.10.0-preview5
+$ git checkout v0.10.5
 ```
 
 Now run the following commands to start up the yaci devkit

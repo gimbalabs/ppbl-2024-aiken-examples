@@ -1,23 +1,23 @@
-import blueprint from "./plutus.json";
-
 import {
   ByteString,
-  OutputReference,
   ConStr0,
   ConStr1,
+  Integer,
   MintingBlueprint,
+  OutputReference,
   PolicyId,
   PubKeyHash,
-  Integer,
   SpendingBlueprint,
 } from "@meshsdk/core";
 
-const version = "V3";
-const networkId = 0; // 0 for testnet; 1 for mainnet
+import blueprint from "./plutus.json";
+
+export const version = "V3";
+export const networkId = 0; // 0 for testnet; 1 for mainnet
 // Every spending validator would compile into an address with an staking key hash
 // Recommend replace with your own stake key / script hash
-const stakeKeyHash = "";
-const isStakeScriptCredential = false;
+export const stakeKeyHash = "";
+export const isStakeScriptCredential = false;
 
 export class OneShotMintBlueprint extends MintingBlueprint {
   compiledCode: string;
