@@ -15,7 +15,7 @@ pub type Action {
 validator one_shot(token_name: ByteArray, utxo_ref: OutputReference) {
   mint(rdmr: Action, policy_id: PolicyId, tx: Transaction) {
     let Transaction { inputs, mint, .. } = tx
-    expect [Pair(asset_name, _amount)] =
+    expect [Pair(asset_name, amount)] =
       mint
         |> assets.tokens(policy_id)
         |> dict.to_pairs()
@@ -23,9 +23,9 @@ validator one_shot(token_name: ByteArray, utxo_ref: OutputReference) {
       Mint -> {
         expect Some(_input) =
           list.find(inputs, fn(input) { input.output_reference == utxo_ref })
-        asset_name == token_name
+        asset_name == token_name && amount >= 1
       }
-      Burn -> asset_name == token_name
+      Burn -> asset_name == token_name && amount <= -1
     }
   }
 
